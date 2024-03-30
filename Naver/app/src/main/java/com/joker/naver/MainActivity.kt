@@ -207,15 +207,6 @@ fun SearchBar(
                         textAlign = TextAlign.Start,
                     )
                 }
-//                Button(onClick = { /* 버튼 클릭 시 수행할 작업 */ },
-//                    modifier = Modifier.width(200.dp).background(color = Color.Cyan), // 버튼을 최대 너비로 설정
-//                    contentPadding = PaddingValues(end = 16.dp) // 버튼의 오른쪽 패딩 조절
-//                ) {
-//                    Text("버튼",
-//                        modifier = Modifier.fillMaxWidth(), // 텍스트를 최대 너비로 설정
-//                        textAlign = TextAlign.Start // 텍스트를 오른쪽 정렬
-//                    )
-//                }
                 val brush = Brush.linearGradient(GreenDot_Gradient)
                 Canvas(
                     modifier = Modifier
