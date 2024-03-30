@@ -14,10 +14,21 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Paid
+import androidx.compose.material.icons.filled.Sms
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Paid
+import androidx.compose.material.icons.outlined.Sms
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -51,8 +62,7 @@ class MainActivity : ComponentActivity() {
 fun HomeScreen() {
     LazyColumn(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color(0xFFA5FF85)),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         item {
@@ -79,16 +89,27 @@ fun TopBar() {
     Box(
         modifier = Modifier
             .height(50.dp)
-            .fillMaxWidth()
-            .background(color = Color.Green),
-//        contentAlignment = Alignment.CenterStart,
+            .fillMaxWidth(),
+        contentAlignment = Alignment.CenterStart,
     ) {
         Row (
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(text = "Top Bar")
-//            Icon(imageVector = Icons.Default.Menu, contentDescription = "menu")
+            val iconSize = 40.dp
+            Row (
+                modifier = Modifier.padding(start = 5.dp)
+            ) {
+                Icon(imageVector = Icons.Outlined.Menu, contentDescription = "menu", modifier = Modifier.size(iconSize).padding(horizontal = 5.dp))
+                Icon(imageVector = Icons.Outlined.Paid, contentDescription = "pay", modifier = Modifier.size(iconSize).padding(horizontal = 5.dp))
+            }
+            Row (
+                modifier = Modifier.padding(end = 5.dp)
+            ) {
+                Icon(imageVector = Icons.Outlined.Sms, contentDescription = "talk", modifier = Modifier.size(iconSize).padding(horizontal = 5.dp))
+                Icon(imageVector = Icons.Outlined.Notifications, contentDescription = "notify", modifier = Modifier.size(iconSize).padding(horizontal = 5.dp))
+                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "account", modifier = Modifier.size(iconSize).padding(horizontal = 5.dp))
+            }
         }
     }
 }
