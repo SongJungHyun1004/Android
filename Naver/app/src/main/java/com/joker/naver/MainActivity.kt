@@ -38,6 +38,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -79,13 +80,13 @@ fun HomeScreen(
         item {
             Column {
                 TopBar()
-                Spacer(modifier = Modifier.height(70.dp))
+                Spacer(modifier = Modifier.height(65.dp))
                 SearchBar(colorMode)
                 Spacer(modifier = Modifier.height(20.dp))
                 Menu()
-                Spacer(modifier = Modifier.height(70.dp))
+                Spacer(modifier = Modifier.height(65.dp))
                 BannerAds()
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(7.dp))
                 Weather()
             }
         }
@@ -168,12 +169,13 @@ fun SearchBar(
         Box(
             modifier = Modifier
                 .height(55.dp)
-                .width(380.dp)
+                .width(370.dp)
                 .border(
                     BorderStroke(1.dp, SolidColor(GreenDot_Green)),
                     shape = RoundedCornerShape(30.dp),
                 )
-                .background(Color.Transparent, RoundedCornerShape(30.dp)),
+                .shadow(elevation = 3.dp, shape = RoundedCornerShape(30.dp))
+                .background(colorMode, RoundedCornerShape(30.dp)),
         ) {
             Row(
                 modifier = Modifier
@@ -249,7 +251,7 @@ fun BannerAds() {
 fun Weather() {
     Box(
         modifier = Modifier
-            .height(85.dp)
+            .height(81.dp)
             .fillMaxWidth()
             .background(color = Color.Green),
     ) {
