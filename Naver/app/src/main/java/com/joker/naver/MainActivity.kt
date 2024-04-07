@@ -43,7 +43,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -51,7 +50,6 @@ import androidx.compose.ui.unit.sp
 import com.joker.naver.ui.theme.GreenDot_Gradient
 import com.joker.naver.ui.theme.GreenDot_Green
 import com.joker.naver.ui.theme.NaverTheme
-import com.joker.naver.ui.theme.color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -232,7 +230,7 @@ fun MenuIcon(
     img: @Composable () -> Unit,
     txt: String,
 ) {
-    Column (
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
@@ -267,7 +265,7 @@ fun Menu(
                 .background(color = colorMode) // colorMode
                 .padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
         ) {
-            Column (
+            Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
@@ -380,9 +378,16 @@ fun BannerAds() {
         modifier = Modifier
             .height(110.dp)
             .fillMaxWidth()
-            .background(color = Color.Green),
+            .padding(top = 5.dp, start = 5.dp),
+        contentAlignment = Alignment.Center,
     ) {
-        Text(text = "Banner Ad")
+        Image(
+            painter = painterResource(id = R.drawable.banner),
+            contentDescription = "banner ad",
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(400.dp),
+        )
     }
 }
 
