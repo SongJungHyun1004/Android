@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -58,11 +59,12 @@ class MainActivity : ComponentActivity() {
             NaverTheme {
                 // A surface container using the 'background' color from the theme
                 val colorMode = MaterialTheme.colorScheme.surface
+                val colorModeSearchBar = MaterialTheme.colorScheme.secondary
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen(colorMode)
+                    HomeScreen(colorMode, colorModeSearchBar)
                 }
             }
         }
@@ -71,7 +73,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun HomeScreen(
-    colorMode: Color
+    colorMode: Color,
+    colorModeSearchBar: Color,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -82,13 +85,13 @@ fun HomeScreen(
             Column {
                 TopBar()
                 Spacer(modifier = Modifier.height(65.dp))
-                SearchBar(colorMode)
+                SearchBar(colorModeSearchBar)
                 Spacer(modifier = Modifier.height(20.dp))
                 Menu(colorMode)
                 Spacer(modifier = Modifier.height(65.dp))
                 BannerAds()
                 Spacer(modifier = Modifier.height(7.dp))
-                Weather()
+                Weather(colorMode)
             }
         }
         items(5) { index ->
@@ -159,7 +162,7 @@ fun TopBar() {
 
 @Composable
 fun SearchBar(
-    colorMode: Color
+    colorModeSearchBar: Color
 ) {
     Box(
         modifier = Modifier
@@ -176,7 +179,7 @@ fun SearchBar(
                     shape = RoundedCornerShape(30.dp),
                 )
                 .shadow(elevation = 3.dp, shape = RoundedCornerShape(30.dp))
-                .background(colorMode, RoundedCornerShape(30.dp)),
+                .background(colorModeSearchBar, RoundedCornerShape(30.dp)),
         ) {
             Row(
                 modifier = Modifier
@@ -216,7 +219,7 @@ fun SearchBar(
                         .size(30.dp),
                     onDraw = {
                         drawCircle(brush)
-                        drawCircle(color = colorMode, radius = 18f)
+                        drawCircle(color = colorModeSearchBar, radius = 18f)
                     }
                 )
             }
@@ -262,7 +265,6 @@ fun Menu(
             modifier = Modifier
                 .width(280.dp)
                 .fillMaxHeight()
-                .background(color = colorMode) // colorMode
                 .padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
         ) {
             Column(
@@ -392,32 +394,30 @@ fun BannerAds() {
 }
 
 @Composable
-fun Weather() {
+fun Weather(
+    colorMode: Color
+) {
     Box(
         modifier = Modifier
             .height(81.dp)
-            .fillMaxWidth()
-            .background(color = Color.Green),
+            .fillMaxWidth(),
     ) {
-        Row(
+        LazyRow (
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.spacedBy(7.dp),
+            contentPadding = PaddingValues(start = 8.dp, end = 8.dp),
         ) {
-            Box(
-                modifier = Modifier
-                    .width(180.dp)
-                    .fillMaxHeight()
-                    .background(color = Color.LightGray)
-            ) {
-                Text(text = "Temperature")
-            }
-            Box(
-                modifier = Modifier
-                    .width(180.dp)
-                    .fillMaxHeight()
-                    .background(color = Color.LightGray)
-            ) {
-                Text(text = "Dust")
+            items(3) { index ->
+                Box(
+                    modifier = Modifier
+                        .width(186.dp)
+                        .fillMaxHeight()
+                        .shadow(elevation = 1.dp, RoundedCornerShape(10.dp))
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(color = colorMode)
+                ) {
+                    Text(text = "Temperature")
+                }
             }
         }
     }
