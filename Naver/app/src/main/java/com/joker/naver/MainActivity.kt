@@ -67,7 +67,7 @@ fun HomeScreen(
             }
         }
         items(5) { index ->
-            Content(text = "content $index")
+            Content(colorMode)
         }
     }
 }
