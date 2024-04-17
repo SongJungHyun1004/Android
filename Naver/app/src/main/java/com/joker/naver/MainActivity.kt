@@ -3,6 +3,8 @@ package com.joker.naver
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -43,31 +46,34 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     colorMode: Color,
     colorModeSearchBar: Color,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        item {
-            Column {
-                TopBar()
-                Spacer(modifier = Modifier.height(65.dp))
-                SearchBar(colorModeSearchBar)
-                Spacer(modifier = Modifier.height(20.dp))
-                Menu(colorMode)
-                Spacer(modifier = Modifier.height(65.dp))
-                BannerAds()
-                Spacer(modifier = Modifier.height(7.dp))
-                Weather(colorMode)
+    CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                Column {
+                    TopBar()
+                    Spacer(modifier = Modifier.height(65.dp))
+                    SearchBar(colorModeSearchBar)
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Menu(colorMode)
+                    Spacer(modifier = Modifier.height(65.dp))
+                    BannerAds()
+                    Spacer(modifier = Modifier.height(7.dp))
+                    Weather(colorMode)
+                }
             }
-        }
-        items(5) { index ->
-            Content(colorMode)
+            items(5) { index ->
+                Content(colorMode)
+            }
         }
     }
 }
