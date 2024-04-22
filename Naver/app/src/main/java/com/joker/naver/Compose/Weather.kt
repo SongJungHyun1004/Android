@@ -55,7 +55,7 @@ fun InfoCard(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column {
-                Text(text = title, color = titleColor ?: Color.Black, fontWeight = FontWeight.Bold)
+                Text(text = title, color = titleColor ?: Color.Unspecified, fontWeight = FontWeight.Bold)
                 Row {
                     Text(text = descript, fontSize = 12.sp)
                     subTxt?.invoke()
