@@ -12,10 +12,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -23,6 +31,7 @@ import com.joker.naver.Compose.BannerAds
 import com.joker.naver.Compose.Content
 import com.joker.naver.Compose.Menu
 import com.joker.naver.Compose.SearchBar
+import com.joker.naver.Compose.StickySearchBar
 import com.joker.naver.Compose.TopBar
 import com.joker.naver.Compose.Weather
 import com.joker.naver.ui.theme.NaverTheme
@@ -52,23 +61,39 @@ fun HomeScreen(
     colorMode: Color,
     colorModeSearchBar: Color,
 ) {
+    val listState = rememberLazyListState()
+    val items = listOf("topbar", "spacer1", "searchbar", "spacer2", "menu", "spacer3", "banner", "spacer4", "weather")
+    var showStickyHeader by remember { mutableStateOf(false) }
+
+    LaunchedEffect(listState) {
+        snapshotFlow {
+            listState.firstVisibleItemIndex
+        }.collect { visibleIndex ->
+            showStickyHeader = visibleIndex >= items.indexOf("spacer2")
+        }
+    }
+
     CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            state = listState,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            item {
-                Column {
-                    TopBar()
-                    Spacer(modifier = Modifier.height(65.dp))
-                    SearchBar(colorModeSearchBar)
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Menu(colorMode)
-                    Spacer(modifier = Modifier.height(65.dp))
-                    BannerAds()
-                    Spacer(modifier = Modifier.height(7.dp))
-                    Weather(colorMode)
+            if (showStickyHeader) {
+                stickyHeader { StickySearchBar(colorMode) }
+            }
+            itemsIndexed(items) {index, item ->
+                when(item) {
+                    "topbar" -> TopBar()
+                    "spacer1" -> Spacer(modifier = Modifier.height(65.dp))
+                    "searchbar" -> SearchBar(colorModeSearchBar)
+                    "spacer2" -> Spacer(modifier = Modifier.height(20.dp))
+                    "menu" -> Menu(colorMode)
+                    "spacer3" -> Spacer(modifier = Modifier.height(65.dp))
+                    "banner" -> BannerAds()
+                    "spacer4" -> Spacer(modifier = Modifier.height(7.dp))
+                    "weather" -> Weather(colorMode)
                 }
             }
             items(5) { index ->
